@@ -1,0 +1,99 @@
+<html>
+<head>
+<title>GsonConverterFactory.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #606366; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(128,128,128); }
+.s1 { color: rgb(169,183,198); }
+.s2 { color: rgb(204,120,50); }
+.s3 { color: rgb(98,151,85); font-style: italic; }
+.s4 { color: rgb(98,151,85); font-weight: bold; font-style: italic; }
+.s5 { color: rgb(119,183,103); font-style: italic; }
+.s6 { color: rgb(106,135,89); }
+</style>
+</head>
+<BODY BGCOLOR="#2b2b2b">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+GsonConverterFactory.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">/* 
+ * Copyright (C) 2015 Square, Inc. 
+ * 
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;); 
+ * you may not use this file except in compliance with the License. 
+ * You may obtain a copy of the License at 
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0 
+ * 
+ * Unless required by applicable law or agreed to in writing, software 
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+ * See the License for the specific language governing permissions and 
+ * limitations under the License. 
+ */</span><span class="s1"> 
+</span><span class="s2">package </span><span class="s1">retrofit2.converter.gson</span><span class="s2">;</span><span class="s1"> 
+ 
+</span><span class="s2">import </span><span class="s1">com.google.gson.Gson</span><span class="s2">;</span><span class="s1"> 
+</span><span class="s2">import </span><span class="s1">com.google.gson.TypeAdapter</span><span class="s2">;</span><span class="s1"> 
+</span><span class="s2">import </span><span class="s1">com.google.gson.reflect.TypeToken</span><span class="s2">;</span><span class="s1"> 
+</span><span class="s2">import </span><span class="s1">java.lang.annotation.Annotation</span><span class="s2">;</span><span class="s1"> 
+</span><span class="s2">import </span><span class="s1">java.lang.reflect.Type</span><span class="s2">;</span><span class="s1"> 
+</span><span class="s2">import </span><span class="s1">okhttp3.RequestBody</span><span class="s2">;</span><span class="s1"> 
+</span><span class="s2">import </span><span class="s1">okhttp3.ResponseBody</span><span class="s2">;</span><span class="s1"> 
+</span><span class="s2">import </span><span class="s1">retrofit2.Converter</span><span class="s2">;</span><span class="s1"> 
+</span><span class="s2">import </span><span class="s1">retrofit2.Retrofit</span><span class="s2">;</span><span class="s1"> 
+ 
+</span><span class="s3">/** 
+ * A {</span><span class="s4">@linkplain </span><span class="s3">Converter.Factory converter} which uses Gson for JSON. 
+ * </span><span class="s5">&lt;p&gt;</span><span class="s3"> 
+ * Because Gson is so flexible in the types it supports, this converter assumes that it can handle 
+ * all types. If you are mixing JSON serialization with something else (such as protocol buffers), 
+ * you must {</span><span class="s4">@linkplain </span><span class="s3">Retrofit.Builder#addConverterFactory(Converter.Factory) add this instance} 
+ * last to allow the other converters a chance to see their types. 
+ */</span><span class="s1"> 
+</span><span class="s2">public final class </span><span class="s1">GsonConverterFactory </span><span class="s2">extends </span><span class="s1">Converter.Factory { 
+  </span><span class="s3">/** 
+   * Create an instance using a default {</span><span class="s4">@link </span><span class="s3">Gson} instance for conversion. Encoding to JSON and 
+   * decoding from JSON (when no charset is specified by a header) will use UTF-8. 
+   */</span><span class="s1"> 
+  </span><span class="s2">public static </span><span class="s1">GsonConverterFactory create() { 
+    </span><span class="s2">return </span><span class="s1">create(</span><span class="s2">new </span><span class="s1">Gson())</span><span class="s2">;</span><span class="s1"> 
+  } 
+ 
+  </span><span class="s3">/** 
+   * Create an instance using {</span><span class="s4">@code </span><span class="s3">gson} for conversion. Encoding to JSON and 
+   * decoding from JSON (when no charset is specified by a header) will use UTF-8. 
+   */</span><span class="s1"> 
+  @SuppressWarnings(</span><span class="s6">&quot;ConstantConditions&quot;</span><span class="s1">) </span><span class="s0">// Guarding public API nullability.</span><span class="s1"> 
+  </span><span class="s2">public static </span><span class="s1">GsonConverterFactory create(Gson gson) { 
+    </span><span class="s2">if </span><span class="s1">(gson == </span><span class="s2">null</span><span class="s1">) </span><span class="s2">throw new </span><span class="s1">NullPointerException(</span><span class="s6">&quot;gson == null&quot;</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+    </span><span class="s2">return new </span><span class="s1">GsonConverterFactory(gson)</span><span class="s2">;</span><span class="s1"> 
+  } 
+ 
+  </span><span class="s2">private final </span><span class="s1">Gson gson</span><span class="s2">;</span><span class="s1"> 
+ 
+  </span><span class="s2">private </span><span class="s1">GsonConverterFactory(Gson gson) { 
+    </span><span class="s2">this</span><span class="s1">.gson = gson</span><span class="s2">;</span><span class="s1"> 
+  } 
+ 
+  @Override 
+  </span><span class="s2">public </span><span class="s1">Converter&lt;ResponseBody</span><span class="s2">, </span><span class="s1">?&gt; responseBodyConverter(Type type</span><span class="s2">, </span><span class="s1">Annotation[] annotations</span><span class="s2">,</span><span class="s1"> 
+      Retrofit retrofit) { 
+    TypeAdapter&lt;?&gt; adapter = gson.getAdapter(TypeToken.get(type))</span><span class="s2">;</span><span class="s1"> 
+    </span><span class="s2">return new </span><span class="s1">GsonResponseBodyConverter&lt;&gt;(gson</span><span class="s2">, </span><span class="s1">adapter)</span><span class="s2">;</span><span class="s1"> 
+  } 
+ 
+  @Override 
+  </span><span class="s2">public </span><span class="s1">Converter&lt;?</span><span class="s2">, </span><span class="s1">RequestBody&gt; requestBodyConverter(Type type</span><span class="s2">,</span><span class="s1"> 
+      Annotation[] parameterAnnotations</span><span class="s2">, </span><span class="s1">Annotation[] methodAnnotations</span><span class="s2">, </span><span class="s1">Retrofit retrofit) { 
+    TypeAdapter&lt;?&gt; adapter = gson.getAdapter(TypeToken.get(type))</span><span class="s2">;</span><span class="s1"> 
+    </span><span class="s2">return new </span><span class="s1">GsonRequestBodyConverter&lt;&gt;(gson</span><span class="s2">, </span><span class="s1">adapter)</span><span class="s2">;</span><span class="s1"> 
+  } 
+} 
+</span></pre>
+</body>
+</html>
