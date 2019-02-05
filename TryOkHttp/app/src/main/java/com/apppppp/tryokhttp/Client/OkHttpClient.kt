@@ -4,7 +4,10 @@ import android.util.Log
 import okhttp3.*
 import okhttp3.OkHttpClient
 
-class OkHttpClient:HTTPClient {
+class OkHttpClient(_url:String, _body:String? = null):HTTPClient {
+
+    override val url: String = _url
+    override val body:String? = _body
 
     /**********************************
      * http://square.github.io/okhttp/
@@ -12,7 +15,7 @@ class OkHttpClient:HTTPClient {
 
     var client = OkHttpClient()
 
-    override fun request(url: String, body:String?): String? {
+    override fun request(): String? {
         val builder = Request.Builder()
         val request = if(body != null) {
             Log.d("mopi", body)

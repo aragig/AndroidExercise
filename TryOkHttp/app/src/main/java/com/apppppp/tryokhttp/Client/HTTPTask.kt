@@ -1,14 +1,29 @@
 package com.apppppp.tryokhttp.Client
 
 import android.os.AsyncTask
+import android.support.v7.app.AppCompatActivity
+import java.lang.ref.WeakReference
 
 
+class HTTPTask<T>(activity: T, private val client:HTTPClient) : AsyncTask<Void, Void, String?>() where T : AppCompatActivity, T : HTTPTask.Listener {
 
-class HTTPTask(private val client:HTTPClient) : AsyncTask<String, Void, String>() {
-    override fun doInBackground(vararg params: String?): String? { // AsyncTaskの抽象メソッド
-        val url = params[0] ?: throw IllegalStateException("Not found url string! usage: HTTPTask().execute(url:String)")
 
-        val body = if(params.size > 1) params[1] else null
-        return client.request(url, body)
+    interface Listener {
+        fun didFinishedHTTPTask(result:String?)
     }
+
+
+    var delegate = WeakReference(activity)
+
+
+    override fun doInBackground(vararg params: Void): String? {
+//        Thread.sleep( 2000)
+        return client.request()
+    }
+
+    override fun onPostExecute(result: String?) {
+//        super.onPostExecute(result)
+        delegate.get()?.didFinishedHTTPTask(result)
+    }
+
 }

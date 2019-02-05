@@ -1,58 +1,70 @@
 package com.apppppp.tryokhttp
 
+import android.os.AsyncTask
+import android.os.AsyncTask.execute
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import android.widget.TextView
-import com.apppppp.tryokhttp.Client.HTTPTask
-import com.apppppp.tryokhttp.Client.OkHttpClient
-import com.apppppp.tryokhttp.Client.VerboseHttpClient
+import com.apppppp.tryokhttp.Client.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), HTTPTask.Listener {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        doGetVerboseClient()
-        doPostVerboseClient()
-        doGetOkHttpClient()
-        doPostOkHttpClient()
 
+        val button1 = findViewById<Button>(R.id.client1)
+        button1.setOnClickListener {
+            doOkHttpClient()
+        }
+        val button2 = findViewById<Button>(R.id.client2)
+        button2.setOnClickListener {
+            doPostOkHttpClient()
+        }
+        val button3 = findViewById<Button>(R.id.client3)
+        button3.setOnClickListener {
+            doVerboseClient()
+        }
+        val button4 = findViewById<Button>(R.id.client4)
+        button4.setOnClickListener {
+            doPostVerboseClient()
+        }
 
     }
+
+
 
     val requestURL = "https://apppppp.com/echo.php"
 
-    fun doGetOkHttpClient() {
-        val client = OkHttpClient()
-        val task = HTTPTask(client)
-        val result = task.execute(requestURL).get() ?: "結果がNull!"
-        val resultText = findViewById<TextView>(R.id.result3)
-        resultText.text = result
+    fun doOkHttpClient() {
+        val client = OkHttpClient(requestURL)
+        doTask(client)
     }
-
     fun doPostOkHttpClient() {
-        val client = OkHttpClient()
-        val task = HTTPTask(client)
-        val result = task.execute(requestURL, "body=やっほー!&name=OkHttpClient").get() ?: "結果がNull!"
-        val resultText = findViewById<TextView>(R.id.result4)
-        resultText.text = result
+        val client = OkHttpClient(requestURL, "body=やっほー!&name=OkHttpClient")
+        doTask(client)
     }
-    fun doGetVerboseClient() {
-        val client = VerboseHttpClient()
-        val task = HTTPTask(client)
-        val result = task.execute(requestURL).get() ?: "結果がNull!"
-        val resultText = findViewById<TextView>(R.id.result1)
-        resultText.text = result
+    fun doVerboseClient() {
+        val client = VerboseHttpClient(requestURL)
+        doTask(client)
+    }
+    fun doPostVerboseClient() {
+        val client = VerboseHttpClient(requestURL, "body=やっほー!&name=VerboseHttpClient")
+        doTask(client)
     }
 
-    fun doPostVerboseClient() {
-        val client = VerboseHttpClient()
-        val task = HTTPTask(client)
-        val result = task.execute(requestURL, "body=やっほー!&name=VerboseHttpClient").get() ?: "結果がNull!"
-        val resultText = findViewById<TextView>(R.id.result2)
-        resultText.text = result
+    fun doTask(client: HTTPClient) {
+        val task = HTTPTask(this, client)
+        task.execute()
+    }
+
+
+    override fun didFinishedHTTPTask(result:String?) {
+        val resultText = findViewById<TextView>(R.id.result)
+        resultText.text = result ?: "結果がNullだよ！"
     }
 
 

@@ -1,5 +1,7 @@
 package com.apppppp.tryokhttp.Client
 
 interface HTTPClient {
-    fun request(url: String, body:String? = null): String?
+    val url:String
+    val body:String?
+    fun request(): String?
 }
