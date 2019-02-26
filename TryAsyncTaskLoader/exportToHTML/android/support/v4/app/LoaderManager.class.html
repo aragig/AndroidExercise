@@ -1,0 +1,87 @@
+<html>
+<head>
+<title>LoaderManager.class</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #808080;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #cc7832;}
+.s3 { color: #629755; font-style: italic;}
+.s4 { color: #629755; font-weight: bold; font-style: italic;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+LoaderManager.class</font>
+</center></td></tr></table>
+<pre><span class="s0">//</span>
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by Fernflower decompiler)
+//
+
+<span class="s2">package </span><span class="s1">android.support.v4.app</span><span class="s2">;</span>
+
+import <span class="s1">android.arch.lifecycle.LifecycleOwner</span><span class="s2">;</span>
+import <span class="s1">android.arch.lifecycle.ViewModelStoreOwner</span><span class="s2">;</span>
+import <span class="s1">android.os.Bundle</span><span class="s2">;</span>
+import <span class="s1">android.support.annotation.MainThread</span><span class="s2">;</span>
+import <span class="s1">android.support.annotation.NonNull</span><span class="s2">;</span>
+import <span class="s1">android.support.annotation.Nullable</span><span class="s2">;</span>
+import <span class="s1">android.support.v4.content.Loader</span><span class="s2">;</span>
+import <span class="s1">java.io.FileDescriptor</span><span class="s2">;</span>
+import <span class="s1">java.io.PrintWriter</span><span class="s2">;</span>
+
+public abstract class <span class="s1">LoaderManager {</span>
+    <span class="s2">public </span><span class="s1">LoaderManager() {</span>
+    }
+
+    @NonNull
+    <span class="s2">public static </span><span class="s1">&lt;T </span><span class="s2">extends </span><span class="s1">LifecycleOwner &amp; ViewModelStoreOwner&gt; LoaderManager getInstance(@NonNull T owner) {</span>
+        <span class="s2">return new </span><span class="s1">LoaderManagerImpl(owner</span><span class="s2">, </span><span class="s1">((ViewModelStoreOwner)owner).getViewModelStore())</span><span class="s2">;</span>
+    <span class="s1">}</span>
+
+    @MainThread
+    @NonNull
+    <span class="s2">public abstract </span><span class="s1">&lt;D&gt; Loader&lt;D&gt; initLoader(</span><span class="s2">int </span><span class="s1">var1</span><span class="s2">, </span><span class="s1">@Nullable Bundle var2</span><span class="s2">, </span><span class="s1">@NonNull LoaderManager.LoaderCallbacks&lt;D&gt; var3)</span><span class="s2">;</span>
+
+    <span class="s1">@MainThread</span>
+    @NonNull
+    <span class="s2">public abstract </span><span class="s1">&lt;D&gt; Loader&lt;D&gt; restartLoader(</span><span class="s2">int </span><span class="s1">var1</span><span class="s2">, </span><span class="s1">@Nullable Bundle var2</span><span class="s2">, </span><span class="s1">@NonNull LoaderManager.LoaderCallbacks&lt;D&gt; var3)</span><span class="s2">;</span>
+
+    <span class="s1">@MainThread</span>
+    <span class="s2">public abstract void </span><span class="s1">destroyLoader(</span><span class="s2">int </span><span class="s1">var1)</span><span class="s2">;</span>
+
+    <span class="s1">@Nullable</span>
+    <span class="s2">public abstract </span><span class="s1">&lt;D&gt; Loader&lt;D&gt; getLoader(</span><span class="s2">int </span><span class="s1">var1)</span><span class="s2">;</span>
+
+    public abstract void <span class="s1">markForRedelivery()</span><span class="s2">;</span>
+
+    <span class="s3">/** </span><span class="s4">@deprecated </span><span class="s3">*/</span>
+    <span class="s1">@Deprecated</span>
+    <span class="s2">public abstract void </span><span class="s1">dump(String var1</span><span class="s2">, </span><span class="s1">FileDescriptor var2</span><span class="s2">, </span><span class="s1">PrintWriter var3</span><span class="s2">, </span><span class="s1">String[] var4)</span><span class="s2">;</span>
+
+    public static void <span class="s1">enableDebugLogging(</span><span class="s2">boolean </span><span class="s1">enabled) {</span>
+        LoaderManagerImpl.DEBUG = enabled<span class="s2">;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">public boolean </span><span class="s1">hasRunningLoaders() {</span>
+        <span class="s2">return false;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">public interface </span><span class="s1">LoaderCallbacks&lt;D&gt; {</span>
+        @MainThread
+        @NonNull
+        Loader&lt;D&gt; onCreateLoader(<span class="s2">int </span><span class="s1">var1</span><span class="s2">, </span><span class="s1">@Nullable Bundle var2)</span><span class="s2">;</span>
+
+        <span class="s1">@MainThread</span>
+        <span class="s2">void </span><span class="s1">onLoadFinished(@NonNull Loader&lt;D&gt; var1</span><span class="s2">, </span><span class="s1">D var2)</span><span class="s2">;</span>
+
+        <span class="s1">@MainThread</span>
+        <span class="s2">void </span><span class="s1">onLoaderReset(@NonNull Loader&lt;D&gt; var1)</span><span class="s2">;</span>
+    <span class="s1">}</span>
+}
+</pre>
+</body>
+</html>

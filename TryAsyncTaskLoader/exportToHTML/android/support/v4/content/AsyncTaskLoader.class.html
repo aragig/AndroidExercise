@@ -1,0 +1,271 @@
+<html>
+<head>
+<title>AsyncTaskLoader.class</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #808080;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #cc7832;}
+.s3 { color: #6a8759;}
+.s4 { color: #6897bb;}
+.s5 { color: #629755; font-style: italic;}
+.s6 { color: #629755; font-weight: bold; font-style: italic;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+AsyncTaskLoader.class</font>
+</center></td></tr></table>
+<pre><span class="s0">//</span>
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by Fernflower decompiler)
+//
+
+<span class="s2">package </span><span class="s1">android.support.v4.content</span><span class="s2">;</span>
+
+import <span class="s1">android.content.Context</span><span class="s2">;</span>
+import <span class="s1">android.os.Handler</span><span class="s2">;</span>
+import <span class="s1">android.os.SystemClock</span><span class="s2">;</span>
+import <span class="s1">android.support.annotation.NonNull</span><span class="s2">;</span>
+import <span class="s1">android.support.annotation.Nullable</span><span class="s2">;</span>
+import <span class="s1">android.support.annotation.RestrictTo</span><span class="s2">;</span>
+import <span class="s1">android.support.annotation.RestrictTo.Scope</span><span class="s2">;</span>
+import <span class="s1">android.support.v4.os.OperationCanceledException</span><span class="s2">;</span>
+import <span class="s1">android.support.v4.util.TimeUtils</span><span class="s2">;</span>
+import <span class="s1">java.io.FileDescriptor</span><span class="s2">;</span>
+import <span class="s1">java.io.PrintWriter</span><span class="s2">;</span>
+import <span class="s1">java.util.concurrent.CountDownLatch</span><span class="s2">;</span>
+import <span class="s1">java.util.concurrent.Executor</span><span class="s2">;</span>
+
+public abstract class <span class="s1">AsyncTaskLoader&lt;D&gt; </span><span class="s2">extends </span><span class="s1">Loader&lt;D&gt; {</span>
+    <span class="s2">static final </span><span class="s1">String TAG = </span><span class="s3">&quot;AsyncTaskLoader&quot;</span><span class="s2">;</span>
+    static final boolean <span class="s1">DEBUG = </span><span class="s2">false;</span>
+    private final <span class="s1">Executor mExecutor</span><span class="s2">;</span>
+    volatile <span class="s1">AsyncTaskLoader&lt;D&gt;.LoadTask mTask</span><span class="s2">;</span>
+    volatile <span class="s1">AsyncTaskLoader&lt;D&gt;.LoadTask mCancellingTask</span><span class="s2">;</span>
+    long <span class="s1">mUpdateThrottle</span><span class="s2">;</span>
+    long <span class="s1">mLastLoadCompleteTime</span><span class="s2">;</span>
+    <span class="s1">Handler mHandler</span><span class="s2">;</span>
+
+    public <span class="s1">AsyncTaskLoader(@NonNull Context context) {</span>
+        <span class="s2">this</span><span class="s1">(context</span><span class="s2">, </span><span class="s1">ModernAsyncTask.THREAD_POOL_EXECUTOR)</span><span class="s2">;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">private </span><span class="s1">AsyncTaskLoader(@NonNull Context context</span><span class="s2">, </span><span class="s1">@NonNull Executor executor) {</span>
+        <span class="s2">super</span><span class="s1">(context)</span><span class="s2">;</span>
+        this<span class="s1">.mLastLoadCompleteTime = -</span><span class="s4">10000L</span><span class="s2">;</span>
+        this<span class="s1">.mExecutor = executor</span><span class="s2">;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">public void </span><span class="s1">setUpdateThrottle(</span><span class="s2">long </span><span class="s1">delayMS) {</span>
+        <span class="s2">this</span><span class="s1">.mUpdateThrottle = delayMS</span><span class="s2">;</span>
+        if <span class="s1">(delayMS != </span><span class="s4">0L</span><span class="s1">) {</span>
+            <span class="s2">this</span><span class="s1">.mHandler = </span><span class="s2">new </span><span class="s1">Handler()</span><span class="s2">;</span>
+        <span class="s1">}</span>
+
+    }
+
+    <span class="s2">protected void </span><span class="s1">onForceLoad() {</span>
+        <span class="s2">super</span><span class="s1">.onForceLoad()</span><span class="s2">;</span>
+        this<span class="s1">.cancelLoad()</span><span class="s2">;</span>
+        this<span class="s1">.mTask = </span><span class="s2">new </span><span class="s1">AsyncTaskLoader.LoadTask()</span><span class="s2">;</span>
+        this<span class="s1">.executePendingTask()</span><span class="s2">;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">protected boolean </span><span class="s1">onCancelLoad() {</span>
+        <span class="s2">if </span><span class="s1">(</span><span class="s2">this</span><span class="s1">.mTask != </span><span class="s2">null</span><span class="s1">) {</span>
+            <span class="s2">if </span><span class="s1">(!</span><span class="s2">this</span><span class="s1">.mStarted) {</span>
+                <span class="s2">this</span><span class="s1">.mContentChanged = </span><span class="s2">true;</span>
+            <span class="s1">}</span>
+
+            <span class="s2">if </span><span class="s1">(</span><span class="s2">this</span><span class="s1">.mCancellingTask != </span><span class="s2">null</span><span class="s1">) {</span>
+                <span class="s2">if </span><span class="s1">(</span><span class="s2">this</span><span class="s1">.mTask.waiting) {</span>
+                    <span class="s2">this</span><span class="s1">.mTask.waiting = </span><span class="s2">false;</span>
+                    this<span class="s1">.mHandler.removeCallbacks(</span><span class="s2">this</span><span class="s1">.mTask)</span><span class="s2">;</span>
+                <span class="s1">}</span>
+
+                <span class="s2">this</span><span class="s1">.mTask = </span><span class="s2">null;</span>
+                return false;
+            <span class="s1">} </span><span class="s2">else if </span><span class="s1">(</span><span class="s2">this</span><span class="s1">.mTask.waiting) {</span>
+                <span class="s2">this</span><span class="s1">.mTask.waiting = </span><span class="s2">false;</span>
+                this<span class="s1">.mHandler.removeCallbacks(</span><span class="s2">this</span><span class="s1">.mTask)</span><span class="s2">;</span>
+                this<span class="s1">.mTask = </span><span class="s2">null;</span>
+                return false;
+            <span class="s1">} </span><span class="s2">else </span><span class="s1">{</span>
+                <span class="s2">boolean </span><span class="s1">cancelled = </span><span class="s2">this</span><span class="s1">.mTask.cancel(</span><span class="s2">false</span><span class="s1">)</span><span class="s2">;</span>
+                if <span class="s1">(cancelled) {</span>
+                    <span class="s2">this</span><span class="s1">.mCancellingTask = </span><span class="s2">this</span><span class="s1">.mTask</span><span class="s2">;</span>
+                    this<span class="s1">.cancelLoadInBackground()</span><span class="s2">;</span>
+                <span class="s1">}</span>
+
+                <span class="s2">this</span><span class="s1">.mTask = </span><span class="s2">null;</span>
+                return <span class="s1">cancelled</span><span class="s2">;</span>
+            <span class="s1">}</span>
+        } <span class="s2">else </span><span class="s1">{</span>
+            <span class="s2">return false;</span>
+        <span class="s1">}</span>
+    }
+
+    <span class="s2">public void </span><span class="s1">onCanceled(@Nullable D data) {</span>
+    }
+
+    <span class="s2">void </span><span class="s1">executePendingTask() {</span>
+        <span class="s2">if </span><span class="s1">(</span><span class="s2">this</span><span class="s1">.mCancellingTask == </span><span class="s2">null </span><span class="s1">&amp;&amp; </span><span class="s2">this</span><span class="s1">.mTask != </span><span class="s2">null</span><span class="s1">) {</span>
+            <span class="s2">if </span><span class="s1">(</span><span class="s2">this</span><span class="s1">.mTask.waiting) {</span>
+                <span class="s2">this</span><span class="s1">.mTask.waiting = </span><span class="s2">false;</span>
+                this<span class="s1">.mHandler.removeCallbacks(</span><span class="s2">this</span><span class="s1">.mTask)</span><span class="s2">;</span>
+            <span class="s1">}</span>
+
+            <span class="s2">if </span><span class="s1">(</span><span class="s2">this</span><span class="s1">.mUpdateThrottle &gt; </span><span class="s4">0L</span><span class="s1">) {</span>
+                <span class="s2">long </span><span class="s1">now = SystemClock.uptimeMillis()</span><span class="s2">;</span>
+                if <span class="s1">(now &lt; </span><span class="s2">this</span><span class="s1">.mLastLoadCompleteTime + </span><span class="s2">this</span><span class="s1">.mUpdateThrottle) {</span>
+                    <span class="s2">this</span><span class="s1">.mTask.waiting = </span><span class="s2">true;</span>
+                    this<span class="s1">.mHandler.postAtTime(</span><span class="s2">this</span><span class="s1">.mTask</span><span class="s2">, this</span><span class="s1">.mLastLoadCompleteTime + </span><span class="s2">this</span><span class="s1">.mUpdateThrottle)</span><span class="s2">;</span>
+                    return;
+                <span class="s1">}</span>
+            }
+
+            <span class="s2">this</span><span class="s1">.mTask.executeOnExecutor(</span><span class="s2">this</span><span class="s1">.mExecutor</span><span class="s2">, </span><span class="s1">(Void[])</span><span class="s2">null</span><span class="s1">)</span><span class="s2">;</span>
+        <span class="s1">}</span>
+
+    }
+
+    <span class="s2">void </span><span class="s1">dispatchOnCancelled(AsyncTaskLoader&lt;D&gt;.LoadTask task</span><span class="s2">, </span><span class="s1">D data) {</span>
+        <span class="s2">this</span><span class="s1">.onCanceled(data)</span><span class="s2">;</span>
+        if <span class="s1">(</span><span class="s2">this</span><span class="s1">.mCancellingTask == task) {</span>
+            <span class="s2">this</span><span class="s1">.rollbackContentChanged()</span><span class="s2">;</span>
+            this<span class="s1">.mLastLoadCompleteTime = SystemClock.uptimeMillis()</span><span class="s2">;</span>
+            this<span class="s1">.mCancellingTask = </span><span class="s2">null;</span>
+            this<span class="s1">.deliverCancellation()</span><span class="s2">;</span>
+            this<span class="s1">.executePendingTask()</span><span class="s2">;</span>
+        <span class="s1">}</span>
+
+    }
+
+    <span class="s2">void </span><span class="s1">dispatchOnLoadComplete(AsyncTaskLoader&lt;D&gt;.LoadTask task</span><span class="s2">, </span><span class="s1">D data) {</span>
+        <span class="s2">if </span><span class="s1">(</span><span class="s2">this</span><span class="s1">.mTask != task) {</span>
+            <span class="s2">this</span><span class="s1">.dispatchOnCancelled(task</span><span class="s2">, </span><span class="s1">data)</span><span class="s2">;</span>
+        <span class="s1">} </span><span class="s2">else if </span><span class="s1">(</span><span class="s2">this</span><span class="s1">.isAbandoned()) {</span>
+            <span class="s2">this</span><span class="s1">.onCanceled(data)</span><span class="s2">;</span>
+        <span class="s1">} </span><span class="s2">else </span><span class="s1">{</span>
+            <span class="s2">this</span><span class="s1">.commitContentChanged()</span><span class="s2">;</span>
+            this<span class="s1">.mLastLoadCompleteTime = SystemClock.uptimeMillis()</span><span class="s2">;</span>
+            this<span class="s1">.mTask = </span><span class="s2">null;</span>
+            this<span class="s1">.deliverResult(data)</span><span class="s2">;</span>
+        <span class="s1">}</span>
+
+    }
+
+    @Nullable
+    <span class="s2">public abstract </span><span class="s1">D loadInBackground()</span><span class="s2">;</span>
+
+    <span class="s1">@Nullable</span>
+    <span class="s2">protected </span><span class="s1">D onLoadInBackground() {</span>
+        <span class="s2">return this</span><span class="s1">.loadInBackground()</span><span class="s2">;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">public void </span><span class="s1">cancelLoadInBackground() {</span>
+    }
+
+    <span class="s2">public boolean </span><span class="s1">isLoadInBackgroundCanceled() {</span>
+        <span class="s2">return this</span><span class="s1">.mCancellingTask != </span><span class="s2">null;</span>
+    <span class="s1">}</span>
+
+    @RestrictTo({Scope.LIBRARY_GROUP})
+    <span class="s2">public void </span><span class="s1">waitForLoader() {</span>
+        AsyncTaskLoader&lt;D&gt;.LoadTask task = <span class="s2">this</span><span class="s1">.mTask</span><span class="s2">;</span>
+        if <span class="s1">(task != </span><span class="s2">null</span><span class="s1">) {</span>
+            task.waitForLoader()<span class="s2">;</span>
+        <span class="s1">}</span>
+
+    }
+
+    <span class="s5">/** </span><span class="s6">@deprecated </span><span class="s5">*/</span>
+    <span class="s1">@Deprecated</span>
+    <span class="s2">public void </span><span class="s1">dump(String prefix</span><span class="s2">, </span><span class="s1">FileDescriptor fd</span><span class="s2">, </span><span class="s1">PrintWriter writer</span><span class="s2">, </span><span class="s1">String[] args) {</span>
+        <span class="s2">super</span><span class="s1">.dump(prefix</span><span class="s2">, </span><span class="s1">fd</span><span class="s2">, </span><span class="s1">writer</span><span class="s2">, </span><span class="s1">args)</span><span class="s2">;</span>
+        if <span class="s1">(</span><span class="s2">this</span><span class="s1">.mTask != </span><span class="s2">null</span><span class="s1">) {</span>
+            writer.print(prefix)<span class="s2">;</span>
+            <span class="s1">writer.print(</span><span class="s3">&quot;mTask=&quot;</span><span class="s1">)</span><span class="s2">;</span>
+            <span class="s1">writer.print(</span><span class="s2">this</span><span class="s1">.mTask)</span><span class="s2">;</span>
+            <span class="s1">writer.print(</span><span class="s3">&quot; waiting=&quot;</span><span class="s1">)</span><span class="s2">;</span>
+            <span class="s1">writer.println(</span><span class="s2">this</span><span class="s1">.mTask.waiting)</span><span class="s2">;</span>
+        <span class="s1">}</span>
+
+        <span class="s2">if </span><span class="s1">(</span><span class="s2">this</span><span class="s1">.mCancellingTask != </span><span class="s2">null</span><span class="s1">) {</span>
+            writer.print(prefix)<span class="s2">;</span>
+            <span class="s1">writer.print(</span><span class="s3">&quot;mCancellingTask=&quot;</span><span class="s1">)</span><span class="s2">;</span>
+            <span class="s1">writer.print(</span><span class="s2">this</span><span class="s1">.mCancellingTask)</span><span class="s2">;</span>
+            <span class="s1">writer.print(</span><span class="s3">&quot; waiting=&quot;</span><span class="s1">)</span><span class="s2">;</span>
+            <span class="s1">writer.println(</span><span class="s2">this</span><span class="s1">.mCancellingTask.waiting)</span><span class="s2">;</span>
+        <span class="s1">}</span>
+
+        <span class="s2">if </span><span class="s1">(</span><span class="s2">this</span><span class="s1">.mUpdateThrottle != </span><span class="s4">0L</span><span class="s1">) {</span>
+            writer.print(prefix)<span class="s2">;</span>
+            <span class="s1">writer.print(</span><span class="s3">&quot;mUpdateThrottle=&quot;</span><span class="s1">)</span><span class="s2">;</span>
+            <span class="s1">TimeUtils.formatDuration(</span><span class="s2">this</span><span class="s1">.mUpdateThrottle</span><span class="s2">, </span><span class="s1">writer)</span><span class="s2">;</span>
+            <span class="s1">writer.print(</span><span class="s3">&quot; mLastLoadCompleteTime=&quot;</span><span class="s1">)</span><span class="s2">;</span>
+            <span class="s1">TimeUtils.formatDuration(</span><span class="s2">this</span><span class="s1">.mLastLoadCompleteTime</span><span class="s2">, </span><span class="s1">SystemClock.uptimeMillis()</span><span class="s2">, </span><span class="s1">writer)</span><span class="s2">;</span>
+            <span class="s1">writer.println()</span><span class="s2">;</span>
+        <span class="s1">}</span>
+
+    }
+
+    <span class="s2">final class </span><span class="s1">LoadTask </span><span class="s2">extends </span><span class="s1">ModernAsyncTask&lt;Void</span><span class="s2">, </span><span class="s1">Void</span><span class="s2">, </span><span class="s1">D&gt; </span><span class="s2">implements </span><span class="s1">Runnable {</span>
+        <span class="s2">private final </span><span class="s1">CountDownLatch mDone = </span><span class="s2">new </span><span class="s1">CountDownLatch(</span><span class="s4">1</span><span class="s1">)</span><span class="s2">;</span>
+        boolean <span class="s1">waiting</span><span class="s2">;</span>
+
+        <span class="s1">LoadTask() {</span>
+        }
+
+        <span class="s2">protected </span><span class="s1">D doInBackground(Void... params) {</span>
+            <span class="s2">try </span><span class="s1">{</span>
+                D data = AsyncTaskLoader.<span class="s2">this</span><span class="s1">.onLoadInBackground()</span><span class="s2">;</span>
+                return <span class="s1">data</span><span class="s2">;</span>
+            <span class="s1">} </span><span class="s2">catch </span><span class="s1">(OperationCanceledException var3) {</span>
+                <span class="s2">if </span><span class="s1">(!</span><span class="s2">this</span><span class="s1">.isCancelled()) {</span>
+                    <span class="s2">throw </span><span class="s1">var3</span><span class="s2">;</span>
+                <span class="s1">} </span><span class="s2">else </span><span class="s1">{</span>
+                    <span class="s2">return null;</span>
+                <span class="s1">}</span>
+            }
+        }
+
+        <span class="s2">protected void </span><span class="s1">onPostExecute(D data) {</span>
+            <span class="s2">try </span><span class="s1">{</span>
+                AsyncTaskLoader.<span class="s2">this</span><span class="s1">.dispatchOnLoadComplete(</span><span class="s2">this, </span><span class="s1">data)</span><span class="s2">;</span>
+            <span class="s1">} </span><span class="s2">finally </span><span class="s1">{</span>
+                <span class="s2">this</span><span class="s1">.mDone.countDown()</span><span class="s2">;</span>
+            <span class="s1">}</span>
+
+        }
+
+        <span class="s2">protected void </span><span class="s1">onCancelled(D data) {</span>
+            <span class="s2">try </span><span class="s1">{</span>
+                AsyncTaskLoader.<span class="s2">this</span><span class="s1">.dispatchOnCancelled(</span><span class="s2">this, </span><span class="s1">data)</span><span class="s2">;</span>
+            <span class="s1">} </span><span class="s2">finally </span><span class="s1">{</span>
+                <span class="s2">this</span><span class="s1">.mDone.countDown()</span><span class="s2">;</span>
+            <span class="s1">}</span>
+
+        }
+
+        <span class="s2">public void </span><span class="s1">run() {</span>
+            <span class="s2">this</span><span class="s1">.waiting = </span><span class="s2">false;</span>
+            <span class="s1">AsyncTaskLoader.</span><span class="s2">this</span><span class="s1">.executePendingTask()</span><span class="s2">;</span>
+        <span class="s1">}</span>
+
+        <span class="s2">public void </span><span class="s1">waitForLoader() {</span>
+            <span class="s2">try </span><span class="s1">{</span>
+                <span class="s2">this</span><span class="s1">.mDone.await()</span><span class="s2">;</span>
+            <span class="s1">} </span><span class="s2">catch </span><span class="s1">(InterruptedException var2) {</span>
+                <span class="s2">;</span>
+            <span class="s1">}</span>
+
+        }
+    }
+}
+</pre>
+</body>
+</html>
