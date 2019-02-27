@@ -10,8 +10,6 @@ import com.apppppp.trydialog.R
 class RadiobuttonDialogFragment: DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
-
-
         val builder = AlertDialog.Builder(activity)
         builder.setTitle("Here Title")
             .setSingleChoiceItems(R.array.language_array, 1) { dialog, which: Int ->
@@ -26,6 +24,4 @@ class RadiobuttonDialogFragment: DialogFragment() {
 
         return builder.create()
     }
-
-
 }
