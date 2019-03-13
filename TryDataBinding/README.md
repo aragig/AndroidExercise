@@ -2,8 +2,6 @@
 
 DataBindingを試すにあたって、MVVMデザインパータンについても調べてみたのでまとめてみる。
 
-[:contents]
-
 
 
 ## MVVM デザインパターン
@@ -116,14 +114,7 @@ class MainActivity : AppCompatActivity() {
 
 ![](https://cdn-ak.f.st-hatena.com/images/fotolife/a/araemonz/20190206/20190206014257.png)
 
-
-
-
-## まとめ
-
 役割分担がはっきりして、とてもいい感じだ。また、一度設定してしまえば、Viewの更新を気にすることなくプログラミングできるのは素晴らしい。積極的にDataBindingを使ってみたいと思った。
-
-本記事プロジェクトのコードは[こちら](https://github.com/araemon/AndroidExercise/tree/master/TryDataBinding)
 
 
 ## 参考
