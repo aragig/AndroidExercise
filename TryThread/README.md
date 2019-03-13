@@ -1,11 +1,12 @@
 Kotlinで`Thread`クラスでのスレッドの作成とキャンセル処理を試してみた。
 
-![](https://cdn-ak.f.st-hatena.com/images/fotolife/a/araemonz/20190310/20190310164725.gif)
 
 
 ## サンプルプロジェクトの全体の内容
 
-[f:id:araemonz:20190310164725g:plain]
+
+![](https://cdn-ak.f.st-hatena.com/images/fotolife/a/araemonz/20190310/20190310164725.gif)
+
 
 画像のようにStartボタンを押すとスレッドを新規作成して処理を走らせる。スレッドで行う処理は1秒間隔でカウンタを1づつ上げそれを標準出力するものである。そしてStopボタンを押すとスレッドがキャンセルされる仕組みとなっている。
 
