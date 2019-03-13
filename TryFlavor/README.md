@@ -20,7 +20,6 @@
 iOSアプリ開発でよくやるXcodeのターゲットを分ける方法をAndroidではビルドバリアント設定のFlavorsを使って行うことが出来る。ここでは調べた範囲でFlavorsの設定方法をまとめておく。
 
 
-[:contents]
 
 
 ## 最終的なbuild.gradleの設定
@@ -430,8 +429,3 @@ Flaverを使うと複雑になっていく。
 素直に別プロジェクトに分けたほうが良い場合もあるので注意して使いたい。リソースだけを変えてリリースするようなアプリ開発には向いている。
 
 
-## まとめ
-
-今回のサンプルプロジェクトはGitHubへプッシュしておく。
-
-[AndroidExercise/TryFlavor/](https://github.com/araemon/AndroidExercise/tree/master/TryFlavor)
