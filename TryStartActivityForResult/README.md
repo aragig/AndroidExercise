@@ -1,10 +1,5 @@
 ![](http://f.hatena.ne.jp/araemonz/20190208002302)
 
-前回に引き続き、この本で学んだことをメモしておく。今回は`startActivityForResult`について。
-
-<a target="_blank"  href="https://www.amazon.co.jp/gp/product/479739580X/ref=as_li_tl?ie=UTF8&camp=247&creative=1211&creativeASIN=479739580X&linkCode=as2&tag=101010fun-22&linkId=55499b04048d89edc1454fb6792fb739"><img border="0" src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=JP&ASIN=479739580X&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=101010fun-22" ></a><img src="//ir-jp.amazon-adsystem.com/e/ir?t=101010fun-22&l=am2&o=9&a=479739580X" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
-
-
 Activity間の画面遷移におけるデータの受け渡しは、シングルトンやPreferenceなどでパターンでやっていたが、簡単なものなら`startActivityForResult`を使えば便利そうだ。
 ここでは単純なモデルで、`startActivityForResult`を使ったデータの受け渡しの動作確認をしていこう。
 
@@ -103,8 +98,4 @@ class SubActivity : AppCompatActivity() {
 
 
 
-
-
-## 参考
-<a target="_blank"  href="https://www.amazon.co.jp/gp/product/479739580X/ref=as_li_tl?ie=UTF8&camp=247&creative=1211&creativeASIN=479739580X&linkCode=as2&tag=101010fun-22&linkId=55499b04048d89edc1454fb6792fb739"><img border="0" src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=JP&ASIN=479739580X&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=101010fun-22" ></a><img src="//ir-jp.amazon-adsystem.com/e/ir?t=101010fun-22&l=am2&o=9&a=479739580X" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
 
