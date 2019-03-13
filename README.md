@@ -1,5 +1,5 @@
 
-## プログラムソース
+## サンプルプログラムソース
 
 * [retrofitsample](https://github.com/araemon/AndroidExercise/tree/master/RetrofitExercise/app/src/main/java/com/apppppp/retrofitsample)
 * [TryAdapterPatern](https://github.com/araemon/AndroidExercise/tree/master/TryAdapterPatern/src)
