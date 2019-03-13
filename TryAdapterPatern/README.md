@@ -1,7 +1,7 @@
 ![](https://cdn-ak.f.st-hatena.com/images/fotolife/a/araemonz/20190208/20190208193347.png)
 
 
-<a target=“_blank" href="https://www.amazon.co.jp/gp/product/4797327030/ref=as_li_tl?ie=UTF8&camp=247&creative=1211&creativeASIN=4797327030&linkCode=as2&tag=101010fun-22&linkId=92c236e37e598c6e1bfee7300726f770">増補改訂版Java言語で学ぶデザインパターン入門</a><img src="//ir-jp.amazon-adsystem.com/e/ir?t=101010fun-22&l=am2&o=9&a=4797327030" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> を読み始めた。ここ数ヶ月で学びたかったことが何だったのか、ようやく見えてきた気がする。つまり私はデザインパターンを学びたかったのだ。
+増補改訂版Java言語で学ぶデザインパターン入門を読み始めた。ここ数ヶ月で学びたかったことが何だったのか、ようやく見えてきた気がする。つまり私はデザインパターンを学びたかったのだ。
 
 色々なプログラミングの本をあさってはみてきたものの、そのプログラミングがどうしてそういう書き方になっているのかイマイチ理解できなかった。それもそのはず、デザインパターンというのを理解していなかったからだろう。本書では23ものデザインパターンを紹介しているので、一つ一つゆっくり理解しながら読み進めて行きたいと思う。
 
@@ -149,7 +149,4 @@ Humanクラスを作成して、そこにDoraemonクラスをもたせること�
 最後にひとつ。実は、Adapterパターンには二種類存在する。ひとつは**継承**によるパターン。もう一つは**委譲**によるパターンがある。今回の場合は前者の継承によるAdapterパターンを使ったことになることを付け加えておきたい。
 
 
-
-## 参考
-<a target="_blank"  href="https://www.amazon.co.jp/gp/product/4797327030/ref=as_li_tl?ie=UTF8&camp=247&creative=1211&creativeASIN=4797327030&linkCode=as2&tag=101010fun-22&linkId=22211256466693978a5a408a835f9484"><img border="0" src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=JP&ASIN=4797327030&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=101010fun-22" ></a><img src="//ir-jp.amazon-adsystem.com/e/ir?t=101010fun-22&l=am2&o=9&a=4797327030" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
 
