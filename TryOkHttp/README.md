@@ -272,7 +272,7 @@ class HTTPTask<T>(activity: T, private val client:HTTPClient) : AsyncTask<Void, 
 
 こちらの記事を大いに参考させてもらった。
 
-[https://qiita.com/niba1122/items/89813b9746f3d1d7979b:title]
+https://qiita.com/niba1122/items/89813b9746f3d1d7979b
 
 
 
