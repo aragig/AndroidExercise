@@ -1,5 +1,7 @@
 # Android Kotlin サンプルソース
 
+以下リンクはプロジェクト内のソースへのショートカットです。
+
 ## 非同期 ＆ ネットワーク処理
 
 * [Retrofit](https://github.com/araemon/AndroidExercise/tree/master/RetrofitExercise/app/src/main/java/com/apppppp/retrofitsample)
