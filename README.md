@@ -17,21 +17,21 @@
 ## View & レイアウト
 
 * [DataBinding](https://github.com/araemon/AndroidExercise/tree/master/TryDataBinding/app/src/main/java/com/apppppp/trydatabinding)
-* [Dialog](https://github.com/araemon/AndroidExercise/tree/master/TryDialog/app/src/main/java/com/apppppp/trydialog)
+* [ダイアログフラグメント](https://github.com/araemon/AndroidExercise/tree/master/TryDialog/app/src/main/java/com/apppppp/trydialog)
 * [Fragment](https://github.com/araemon/AndroidExercise/tree/master/TryFragment/app/src/main/java/com/apppppp/tryfragment)
 * [ListView](https://github.com/araemon/AndroidExercise/tree/master/TryListView/app/src/main/java/com/apppppp/trylistview)
-* [RadiusLayout](https://github.com/araemon/AndroidExercise/tree/master/TryRadius/app/src/main/java/com/apppppp/tryradius)
+* [角丸表現](https://github.com/araemon/AndroidExercise/tree/master/TryRadius/app/src/main/java/com/apppppp/tryradius)
 * [RecyclerView](https://github.com/araemon/AndroidExercise/tree/master/TryRecyclerView/app/src/main/java/com/apppppp/tryrecyclerview)
 * [SavedInstanceState](https://github.com/araemon/AndroidExercise/tree/master/TrySavedInstanceState/app/src/main/java/com/apppppp/trysavedinstancestate)
-* [SpringAnimation](https://github.com/araemon/AndroidExercise/tree/master/TrySpringAnimation/app/src/main/java/com/apppppp/tryspringanimation)
+* [バネアニメーション](https://github.com/araemon/AndroidExercise/tree/master/TrySpringAnimation/app/src/main/java/com/apppppp/tryspringanimation)
 * [StartActivityForResult](https://github.com/araemon/AndroidExercise/tree/master/TryStartActivityForResult/app/src/main/java/com/apppppp/trystartactivityforresult)
 * [TouchMove](https://github.com/araemon/AndroidExercise/tree/master/TryTouchMove/app/src/main/java/com/apppppp/trytouchmove)
 
 
 ## デザインパターン
 
-* [AdapterPatern 1](https://github.com/araemon/AndroidExercise/tree/master/TryAdapterPatern/src)
-* [AdapterPatern 2](https://github.com/araemon/AndroidExercise/tree/master/TryAdapterPatern2/src)
+* [アダプターパターン 1](https://github.com/araemon/AndroidExercise/tree/master/TryAdapterPatern/src)
+* [アダプターパターン 2](https://github.com/araemon/AndroidExercise/tree/master/TryAdapterPatern2/src)
 
 ## その他
 
