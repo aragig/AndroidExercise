@@ -221,8 +221,7 @@ class FugaFragment : Fragment() {
 
 ![](https://cdn-ak.f.st-hatena.com/images/fotolife/a/araemonz/20190302/20190302150203.jpg)
 
-この`FugaFragment`には`companion object`というシングルトンで使うような宣言がある。しかしこれはシングルトンではなくファクトリーメソッドであることに注意しよう。
-`Android Studio`で`Fragment`を新規作成するときに、`include fragment factory methods?`にチェックを入れることでこのようにファクトリーメソッドが自動生成されるのだ。
+この`FugaFragment`には`companion object`というシングルトンの宣言がある。`Android Studio`で`Fragment`を新規作成するときに、`include fragment factory methods?`にチェックを入れることでこのようにファクトリーメソッドが自動生成されるのだ。
 
 ```kotlin
 private const val ARG_PARAM1 = "param1"
@@ -243,10 +242,6 @@ class FugaFragment : Fragment() {
 
 	...
 	companion object {
-		/**
-			* ファクトリーメソッド(シングルトンではない)
-			* newInstanceを呼び出してインスタンス生成することで引数を渡せる
-			* */
 		@JvmStatic
 		fun newInstance(param1: String, param2: String) =
 			FugaFragment().apply {
