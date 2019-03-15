@@ -77,10 +77,6 @@ class FugaFragment : Fragment() {
     }
 
     companion object {
-        /**
-         * ファクトリーメソッド(シングルトンではない)
-         * newInstanceを呼び出してインスタンス生成することで引数を渡せる
-         * */
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             FugaFragment().apply {
