@@ -295,6 +295,8 @@ class NoticeDialogFragment: DialogFragment() {
     override fun onDetach() {
         println("NoticeDialogFragmentのonDetachが呼ばれたよ！")
         super.onDetach()
+	mLister = null
+
     }
 }
 ```
