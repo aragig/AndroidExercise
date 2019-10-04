@@ -24,7 +24,7 @@
 * [RecyclerView](https://github.com/araemon/AndroidExercise/tree/master/TryRecyclerView/app/src/main/java/com/apppppp/tryrecyclerview)
 * [SavedInstanceState](https://github.com/araemon/AndroidExercise/tree/master/TrySavedInstanceState/app/src/main/java/com/apppppp/trysavedinstancestate)
 * [バネアニメーション](https://github.com/araemon/AndroidExercise/tree/master/TrySpringAnimation/app/src/main/java/com/apppppp/tryspringanimation)
-* [StartActivityForResult](https://github.com/araemon/AndroidExercise/tree/master/TryStartActivityForResult/app/src/main/java/com/apppppp/trystartactivityforresult)
+* [StartActivityForResult](https://github.com/araemon/AndroidExercise/tree/master/TryStartActivityForResult/app/src/main/java/com/apppppp/trystartactivityforresult) ([Blog](https://101010.fun/posts/android-try-start-activity-for-result.html))  
 * [TouchMove](https://github.com/araemon/AndroidExercise/tree/master/TryTouchMove/app/src/main/java/com/apppppp/trytouchmove)
 
 
