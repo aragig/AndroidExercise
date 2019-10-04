@@ -19,7 +19,7 @@
 * [DataBinding](https://github.com/araemon/AndroidExercise/tree/master/TryDataBinding/app/src/main/java/com/apppppp/trydatabinding)
 * [ダイアログフラグメント](https://github.com/araemon/AndroidExercise/tree/master/TryDialog/app/src/main/java/com/apppppp/trydialog) ([Blog](https://101010.fun/posts/android-try-dialog.html))
 * [Fragment](https://github.com/araemon/AndroidExercise/tree/master/TryFragment/app/src/main/java/com/apppppp/tryfragment) ([Blog](https://101010.fun/posts/android-try-fragment.html))
-* [ListView](https://github.com/araemon/AndroidExercise/tree/master/TryListView/app/src/main/java/com/apppppp/trylistview)
+* [ListView](https://github.com/araemon/AndroidExercise/tree/master/TryListView/app/src/main/java/com/apppppp/trylistview) ([Blog](https://101010.fun/posts/android-try-listview.html))
 * [角丸表現](https://github.com/araemon/AndroidExercise/tree/master/TryRadius/app/src/main/java/com/apppppp/tryradius)
 * [RecyclerView](https://github.com/araemon/AndroidExercise/tree/master/TryRecyclerView/app/src/main/java/com/apppppp/tryrecyclerview)
 * [SavedInstanceState](https://github.com/araemon/AndroidExercise/tree/master/TrySavedInstanceState/app/src/main/java/com/apppppp/trysavedinstancestate)
