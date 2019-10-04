@@ -17,7 +17,7 @@
 ## View & レイアウト
 
 * [DataBinding](https://github.com/araemon/AndroidExercise/tree/master/TryDataBinding/app/src/main/java/com/apppppp/trydatabinding)
-* [ダイアログフラグメント](https://github.com/araemon/AndroidExercise/tree/master/TryDialog/app/src/main/java/com/apppppp/trydialog) [Blog](https://101010.fun/posts/android-try-dialog.html)
+* [ダイアログフラグメント](https://github.com/araemon/AndroidExercise/tree/master/TryDialog/app/src/main/java/com/apppppp/trydialog) ([Blog](https://101010.fun/posts/android-try-dialog.html))
 * [Fragment](https://github.com/araemon/AndroidExercise/tree/master/TryFragment/app/src/main/java/com/apppppp/tryfragment)
 * [ListView](https://github.com/araemon/AndroidExercise/tree/master/TryListView/app/src/main/java/com/apppppp/trylistview)
 * [角丸表現](https://github.com/araemon/AndroidExercise/tree/master/TryRadius/app/src/main/java/com/apppppp/tryradius)
