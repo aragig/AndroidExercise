@@ -21,7 +21,7 @@
 * [Fragment](https://github.com/araemon/AndroidExercise/tree/master/TryFragment/app/src/main/java/com/apppppp/tryfragment) ([Blog](https://101010.fun/posts/android-try-fragment.html))
 * [ListView](https://github.com/araemon/AndroidExercise/tree/master/TryListView/app/src/main/java/com/apppppp/trylistview) ([Blog](https://101010.fun/posts/android-try-listview.html))
 * [角丸表現](https://github.com/araemon/AndroidExercise/tree/master/TryRadius/app/src/main/java/com/apppppp/tryradius)
-* [RecyclerView](https://github.com/araemon/AndroidExercise/tree/master/TryRecyclerView/app/src/main/java/com/apppppp/tryrecyclerview)
+* [RecyclerView](https://github.com/araemon/AndroidExercise/tree/master/TryRecyclerView/app/src/main/java/com/apppppp/tryrecyclerview) ([Blog](https://101010.fun/posts/android-try-tryrecyclerview.html))
 * [SavedInstanceState](https://github.com/araemon/AndroidExercise/tree/master/TrySavedInstanceState/app/src/main/java/com/apppppp/trysavedinstancestate)
 * [バネアニメーション](https://github.com/araemon/AndroidExercise/tree/master/TrySpringAnimation/app/src/main/java/com/apppppp/tryspringanimation)
 * [StartActivityForResult](https://github.com/araemon/AndroidExercise/tree/master/TryStartActivityForResult/app/src/main/java/com/apppppp/trystartactivityforresult) ([Blog](https://101010.fun/posts/android-try-start-activity-for-result.html))  
