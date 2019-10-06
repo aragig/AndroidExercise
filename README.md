@@ -20,12 +20,12 @@
 * [ダイアログフラグメント](https://github.com/araemon/AndroidExercise/tree/master/TryDialog/app/src/main/java/com/apppppp/trydialog) ([Blog](https://101010.fun/posts/android-try-dialog.html))
 * [Fragment](https://github.com/araemon/AndroidExercise/tree/master/TryFragment/app/src/main/java/com/apppppp/tryfragment) ([Blog](https://101010.fun/posts/android-try-fragment.html))
 * [ListView](https://github.com/araemon/AndroidExercise/tree/master/TryListView/app/src/main/java/com/apppppp/trylistview) ([Blog](https://101010.fun/posts/android-try-listview.html))
-* [角丸表現](https://github.com/araemon/AndroidExercise/tree/master/TryRadius/app/src/main/java/com/apppppp/tryradius)
+* [角丸表現](https://github.com/araemon/AndroidExercise/tree/master/TryRadius/app/src/main/java/com/apppppp/tryradius) ([Blog](https://101010.fun/posts/android-try-radius.html))
 * [RecyclerView](https://github.com/araemon/AndroidExercise/tree/master/TryRecyclerView/app/src/main/java/com/apppppp/tryrecyclerview) ([Blog](https://101010.fun/posts/android-try-recyclerview.html))
-* [SavedInstanceState](https://github.com/araemon/AndroidExercise/tree/master/TrySavedInstanceState/app/src/main/java/com/apppppp/trysavedinstancestate)
-* [バネアニメーション](https://github.com/araemon/AndroidExercise/tree/master/TrySpringAnimation/app/src/main/java/com/apppppp/tryspringanimation)
+* [SavedInstanceState](https://github.com/araemon/AndroidExercise/tree/master/TrySavedInstanceState/app/src/main/java/com/apppppp/trysavedinstancestate) ([Blog](https://101010.fun/posts/android-try-savedinstancestate.html))
+* [バネアニメーション](https://github.com/araemon/AndroidExercise/tree/master/TrySpringAnimation/app/src/main/java/com/apppppp/tryspringanimation) ([Blog](https://101010.fun/posts/android-try-springanimation.html))
 * [StartActivityForResult](https://github.com/araemon/AndroidExercise/tree/master/TryStartActivityForResult/app/src/main/java/com/apppppp/trystartactivityforresult) ([Blog](https://101010.fun/posts/android-try-start-activity-for-result.html))  
-* [TouchMove](https://github.com/araemon/AndroidExercise/tree/master/TryTouchMove/app/src/main/java/com/apppppp/trytouchmove)
+* [TouchMove](https://github.com/araemon/AndroidExercise/tree/master/TryTouchMove/app/src/main/java/com/apppppp/trytouchmove) ([Blog](https://101010.fun/posts/android-try-touchmove.html))
 
 
 ## デザインパターン
