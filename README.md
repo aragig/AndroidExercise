@@ -32,7 +32,7 @@
 ## デザインパターン
 
 * アダプターパターン 1 ([Source](https://github.com/araemon/AndroidExercise/tree/master/TryAdapterPatern/src))
-* アダプターパターン 1 ([Source](https://github.com/araemon/AndroidExercise/tree/master/TryAdapterPatern2/src))
+* アダプターパターン 2 ([Source](https://github.com/araemon/AndroidExercise/tree/master/TryAdapterPatern2/src))
 
 ## その他
 
