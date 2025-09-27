@@ -46,5 +46,5 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    implementation("org.java-websocket:Java-WebSocket:1.5.2")
+    implementation(libs.java.websocket)
 }
